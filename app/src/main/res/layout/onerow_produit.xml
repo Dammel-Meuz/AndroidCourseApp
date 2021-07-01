@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:background="@color/meuz6"
+android:fadeScrollbars="false"
+android:focusableInTouchMode="false"
+android:orientation="vertical"
+android:padding="9dp"
+android:paddingBottom="10dp">
+
+
+    <ImageView
+        android:id="@+id/imgProdiutlist"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/img_user"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgProdiutlist"
+        android:layout_toEndOf="@+id/imgProdiutlist"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        >
+        <TextView
+            android:id="@+id/nameProductList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name Product"
+            android:textColor="@color/design_default_color_on_primary"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/isValidCheck"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignEnd="@id/nameProductList"
+
+            />
+        <TextView
+            android:id="@+id/prixProductList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameProductList"
+            android:text="1200 fr"
+            android:textColor="@color/design_default_color_on_primary"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/quantityProductList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18"
+            android:layout_below="@id/prixProductList"
+            android:textColor="@color/design_default_color_on_primary"
+            android:textSize="25dp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

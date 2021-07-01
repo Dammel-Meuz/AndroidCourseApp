@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/meuz6"
+    android:fadeScrollbars="false"
+    android:focusableInTouchMode="false"
+    android:orientation="vertical"
+    android:padding="9dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/idList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="IdList"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/titleList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idList"
+        android:layout_alignBaseline="@id/idList"
+        android:paddingLeft="35dp"
+        android:text="ListName"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/montantListe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleList"
+        android:padding="10dp"
+        android:text="120"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp" />
+
+
+    <TextView
+        android:id="@+id/dateList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/titleList"
+        android:text="19-10-2020"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>
