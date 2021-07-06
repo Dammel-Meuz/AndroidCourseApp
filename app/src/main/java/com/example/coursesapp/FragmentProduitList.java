@@ -84,7 +84,7 @@ public class FragmentProduitList extends Fragment {
         TextView nameProduct, PrixProduct, quantityProduct;
         ImageView imgProduct;
         CheckBox isvalidProduct;
-        boolean test;
+        boolean test = true;
 
 
         public ListProductHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -103,12 +103,9 @@ public class FragmentProduitList extends Fragment {
             test =produits.getisAccomplitAchatProduit();
             nameProduct.setText(produits.getNomProduit());
             PrixProduct.setText(produits.getPrixProduit()+" fr");
-            //ehfiheifhezo
-           // quantityProduct.setText(produits.getQuantiteProduit());
+            quantityProduct.setText(String.valueOf(produits.getQuantiteProduit()));
             imgProduct.setImageURI(Uri.parse(produits.getImageProduit()));
-            if (produits.getisAccomplitAchatProduit() == true){
-                isvalidProduct.setChecked(true);
-            }
+            isvalidProduct.isChecked();
 
 
 

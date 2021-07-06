@@ -80,7 +80,7 @@ public class AdjouProductActivity extends AppCompatActivity {
                     produits.setImageProduit(imageUri.toString());
                     produits.setPrixProduit(Integer.parseInt(prix.getText().toString()));
                     produits.setQuantiteProduit(Integer.parseInt(quantity.getText().toString()));
-                    produits.setAccomplitAchatProduit(false);
+                    produits.setAccomplitAchatProduit(true);
                     produits.setNomProduit(name.getText().toString());
 
                     db.onpenDataBase();

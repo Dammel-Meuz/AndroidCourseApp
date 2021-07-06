@@ -1,5 +1,7 @@
 package com.example.coursesapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.HardwareRenderer;
 import android.os.Build;
@@ -12,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,8 +66,10 @@ public class FragmentList extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         db = new DataBaseHelpers(getContext());
-        ListAdapter listAdapter =new ListAdapter(db.listeCourse3());
+        ListAdapter listAdapter =new ListAdapter(db.listeCourse());
         recyclerView.setAdapter(listAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return view;
     }
@@ -128,7 +134,61 @@ public class FragmentList extends Fragment {
             public int getItemCount() {
                 return listList.size();
             }
+            //to delete item
+
+            public void deleteItemList (int position){
+                Liste item = listList.get(position);
+                db.getWritableDatabase();
+                db.deleteList(item.getIdList());
+                listList.remove(position);
+                notifyItemRemoved(position);
+            }
         }
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
+                //int position = viewHolder.getPosition();
+                switch (direction){
+                    case ItemTouchHelper.LEFT:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Delete Task");
+                        builder.setMessage("Are you sure you want ti delete this task");
+                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.setNegativeButton("annuler", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                              dialog.cancel();
+                            }
+                        });
+                        Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        Toast.makeText(getContext()," moved RIGHT",Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builderR = new AlertDialog.Builder(getContext());
+                        builderR.setTitle("Udate Task");
+                        builderR.setMessage("Are you sure you want ti Udate this task");
+                        Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
+                        AlertDialog dialogR = builderR.create();
+                        dialogR.show();
+                        break;
+                }
+
+            }
+        };
     }
 
 

@@ -141,7 +141,11 @@ public class DataBaseHelpers extends SQLiteOpenHelper {
         db.insert(LIST_TABLE,null,cv);
     }
 
-    public ArrayList<Liste> listeCourse(){
+    public void deleteList(int id){
+        db.delete(LIST_TABLE,ID_LIST + "=?",new String[]{String.valueOf(id)});
+    }
+
+    public ArrayList<Liste> listeCourse3(){
         String sql = "select * from lists";
         //db= this.getReadableDatabase();
         Cursor cursor =null;
@@ -169,7 +173,7 @@ public class DataBaseHelpers extends SQLiteOpenHelper {
         return storeCourse;
     }
 
-    public ArrayList<Liste> listeCourse3(){
+    public ArrayList<Liste> listeCourse(){
         String sql = "select * from "+LIST_TABLE;
         db=this.getReadableDatabase();
         ArrayList<Liste> storeCourse = new ArrayList<>();
@@ -212,7 +216,7 @@ public class DataBaseHelpers extends SQLiteOpenHelper {
                 String productName = cursor.getString(2);
                 int quantity = Integer.parseInt(cursor.getString(3));
                 int prix = Integer.parseInt(cursor.getString(4));
-                boolean isachat =Boolean.parseBoolean(cursor.getString(5));
+                boolean isachat =Boolean.parseBoolean(cursor.getString(6));
                 String image = cursor.getString(5);
                // byte[] image = cursor.getBlob(6);
                 Produits p = new Produits();
