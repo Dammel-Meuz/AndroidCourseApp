@@ -3,6 +3,7 @@ package com.example.coursesapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.HardwareRenderer;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,15 +69,70 @@ public class FragmentList extends Fragment {
         db = new DataBaseHelpers(getContext());
         ListAdapter listAdapter =new ListAdapter(db.listeCourse());
         recyclerView.setAdapter(listAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+       // ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+       // itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        //swip
+        RecycleItemTouchHelper recycleItemTouchHelper = new RecycleItemTouchHelper(getContext(), recyclerView, 200) {
+            @Override
+            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<RecycleItemTouchHelper.MyButton> buffer) {
+
+                buffer.add(new MyButton(getContext(),
+                        "Delete",
+                        30,
+                        0,
+                        Color.parseColor("#FF3c30"),
+                        new MyButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                final int position = viewHolder.getAdapterPosition();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Delete Task");
+                                builder.setMessage("Are you sure you want ti delete this task");
+                                builder.setPositiveButton("confirmer",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                listAdapter.deleteItemList(position);
+
+                                            }
+                                        });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                Toast.makeText(getContext(),"Delete Click",Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+                buffer.add(new MyButton(getContext(),
+                        "Update",
+                        30,
+                       0,
+                       // R.drawable.ic_edit_whith_launcher50_foreground,
+                        Color.parseColor("#01D758"),
+                        new MyButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                               Intent intent = new Intent(getContext(),Edit_List.class);
+                               //Liste liste =new Liste();
+                                intent.putExtra("id",3);
+                                startActivity(intent);
+                                Toast.makeText(getContext(),"Update Click",Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+        };
 
         return view;
     }
 
     class ListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Liste liste = new Liste();
-        TextView titreList, dateList,montant,idlist;
+        TextView titreList, dateList,montant,idlist,dateListModif;
 
         public ListHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.onerow, parent, false));
@@ -85,6 +141,7 @@ public class FragmentList extends Fragment {
             dateList = itemView.findViewById(R.id.dateList);
             montant = itemView.findViewById(R.id.montantListe);
             idlist = itemView.findViewById(R.id.idList);
+           //dateListModif = itemView.findViewById(R.id.dateListUdate);
             itemView.setOnClickListener(this);
 
         }
@@ -92,10 +149,11 @@ public class FragmentList extends Fragment {
 
         public void bind(Liste liste) {
             this.liste = liste;
-            titreList.setText(liste.getListName());
+            titreList.setText(" "+liste.getListName().toUpperCase());
             dateList.setText(liste.getDateCreation());
             montant.setText(liste.getMontantPrevue()+" fr");
             idlist.setText(Integer.toString(liste.getIdList()));
+            //dateListModif.setText(liste.getDateModification());
 
         }
 
@@ -128,6 +186,7 @@ public class FragmentList extends Fragment {
             public void onBindViewHolder(@NonNull @NotNull ListHolder holder, int position) {
                 holder.bind(listList.get(position));
 
+
             }
 
             @Override
@@ -145,50 +204,8 @@ public class FragmentList extends Fragment {
             }
         }
 
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
-            @Override
-            public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
-                //int position = viewHolder.getPosition();
-                switch (direction){
-                    case ItemTouchHelper.LEFT:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Delete Task");
-                        builder.setMessage("Are you sure you want ti delete this task");
-                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
 
-                                Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        builder.setNegativeButton("annuler", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                              dialog.cancel();
-                            }
-                        });
-                        Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                        break;
-                    case ItemTouchHelper.RIGHT:
-                        Toast.makeText(getContext()," moved RIGHT",Toast.LENGTH_SHORT).show();
-                        AlertDialog.Builder builderR = new AlertDialog.Builder(getContext());
-                        builderR.setTitle("Udate Task");
-                        builderR.setMessage("Are you sure you want ti Udate this task");
-                        Toast.makeText(getContext()," moved LEFT",Toast.LENGTH_SHORT).show();
-                        AlertDialog dialogR = builderR.create();
-                        dialogR.show();
-                        break;
-                }
-
-            }
-        };
     }
 
 

@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoursesApp">
-        <activity android:name=".Activity_list_product"></activity>
-
+        <activity android:name=".Edit_List"></activity>
+        <activity android:name=".Activity_list_product" />
         <activity android:name=".AddListCourseActivity" />
         <activity android:name=".AdjouProductActivity" />
         <activity android:name=".HomeActivity" />

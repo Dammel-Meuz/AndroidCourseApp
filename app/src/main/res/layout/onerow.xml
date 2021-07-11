@@ -46,9 +46,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@id/titleList"
+        android:padding="10dp"
         android:text="19-10-2020"
         android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
+
+
 
 
 </RelativeLayout>

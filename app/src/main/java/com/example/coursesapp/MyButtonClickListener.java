@@ -1,4 +1,4 @@
 package com.example.coursesapp;
-
-public class MyButtonClickListener {
+public interface MyButtonClickListener {
+    void onClick(int pos);
 }

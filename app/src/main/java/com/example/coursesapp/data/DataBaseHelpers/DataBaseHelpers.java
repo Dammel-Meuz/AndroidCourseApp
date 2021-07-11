@@ -18,8 +18,6 @@ import java.util.ArrayList;
 
 public class DataBaseHelpers extends SQLiteOpenHelper {
 
-
-
     static final String DB_name ="CoursApp";
     static final int DB_version =1;
 
@@ -145,33 +143,36 @@ public class DataBaseHelpers extends SQLiteOpenHelper {
         db.delete(LIST_TABLE,ID_LIST + "=?",new String[]{String.valueOf(id)});
     }
 
-    public ArrayList<Liste> listeCourse3(){
-        String sql = "select * from lists";
-        //db= this.getReadableDatabase();
-        Cursor cursor =null;
-        db.beginTransaction();
-        ArrayList<Liste> storeCourse =new ArrayList<>();
-        //Cursor cursor =db.rawQuery(sql,null);
-        try {
-       cursor = db.query(LIST_TABLE,null,null,null,null,null,null,null);
-        if (cursor!=null){
-            if (cursor.moveToFirst()){
-                do{
-                    Liste liste = new Liste();
-                    liste.setListName(cursor.getString(cursor.getColumnIndex(NAME_LIST)));
-                    liste.setListName(cursor.getString(cursor.getColumnIndex(MONTANT_LIST)));
-                    liste.setListName(cursor.getString(cursor.getColumnIndex(DATE_CREATION_LIST)));
-                    liste.setListName(cursor.getString(cursor.getColumnIndex(DATE_MODIFICATION_LIST)));
-                    storeCourse.add(liste);
-                }while (cursor.moveToNext());
-            }
+
+    // Getting single list
+    public Liste oneliste(int id) {
+        Liste liste = null;
+        String sql = "SELECT * FROM " +LIST_TABLE+"  WHERE id = " + id;
+       db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            int idlist = Integer.parseInt(cursor.getString(cursor.getColumnIndex(LIST_ID)));
+            String nameList = cursor.getString(cursor.getColumnIndex(NAME_LIST));
+            String montantList = cursor.getString(cursor.getColumnIndex(MONTANT_LIST));
+            liste = new Liste();
+            liste.setIdList(idlist);
+            liste.setListName(nameList);
+            liste.setMontantPrevue(montantList);
+
         }
-        }finally {
-            db.endTransaction();
-            cursor.close();
-        }
-        return storeCourse;
+        cursor.close();
+        db.close();
+        return liste;
     }
+    public void updatList(int id,Liste liste){
+        ContentValues cv = new ContentValues();
+        cv.put(NAME_LIST,liste.getListName());
+        cv.put(MONTANT_LIST,liste.getMontantPrevue());
+        cv.put(DATE_MODIFICATION_LIST,liste.getDateModification());
+        cv.put(DATE_CREATION_LIST,liste.getDateModification());
+        db.update(LIST_TABLE, cv,ID + "=?",new String[] {String.valueOf(id)});
+    }
+
 
     public ArrayList<Liste> listeCourse(){
         String sql = "select * from "+LIST_TABLE;
@@ -231,6 +232,9 @@ public class DataBaseHelpers extends SQLiteOpenHelper {
             }
         cursor.close();
         return storProduct;
+    }
+    public void deleteProduit(int id){
+        db.delete(PRODUCT_TABLE,ID_PRODUCT + "=?",new String[]{String.valueOf(id)});
     }
 
 

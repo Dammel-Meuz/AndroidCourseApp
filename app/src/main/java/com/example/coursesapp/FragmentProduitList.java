@@ -1,9 +1,12 @@
 package com.example.coursesapp;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -75,6 +78,60 @@ public class FragmentProduitList extends Fragment {
         FragmentProduitList.ProductListAdapter productListAdapter=new ProductListAdapter(db.listProduct(idlistrecup));
         recyclerView.setAdapter(productListAdapter);
 
+        //swip
+        RecycleItemTouchHelper recycleItemTouchHelper = new RecycleItemTouchHelper(getContext(), recyclerView, 200) {
+            @Override
+            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<RecycleItemTouchHelper.MyButton> buffer) {
+
+                buffer.add(new MyButton(getContext(),
+                        "Delete",
+                        30,
+                        0,
+                        Color.parseColor("#FF3c30"),
+                        new MyButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                final int position = viewHolder.getAdapterPosition();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Delete Task");
+                                builder.setMessage("Are you sure you want ti delete this task");
+                                builder.setPositiveButton("confirmer",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                productListAdapter.deleteItemList(position);
+
+                                            }
+                                        });
+                                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        productListAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                Toast.makeText(getContext(),"Delete Click",Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+                buffer.add(new MyButton(getContext(),
+                        "Update",
+                        30,
+                        0,
+                        // R.drawable.ic_edit_whith_launcher50_foreground,
+                        Color.parseColor("#01D758"),
+                        new MyButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                Intent intent = new Intent(getContext(),Edit_List.class);
+                                //Liste liste =new Liste();
+                                intent.putExtra("id",3);
+                                startActivity(intent);
+                                Toast.makeText(getContext(),"Update Click",Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+        };
 
 
         return view;
@@ -141,6 +198,16 @@ public class FragmentProduitList extends Fragment {
         @Override
         public int getItemCount() {
             return productList.size();
+        }
+
+        //to delete item
+
+        public void deleteItemList (int position){
+            Produits item = productList.get(position);
+            db.getWritableDatabase();
+            db.deleteList(item.getIdList());
+            productList.remove(position);
+            notifyItemRemoved(position);
         }
     }
 }

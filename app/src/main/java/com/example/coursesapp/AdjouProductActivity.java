@@ -53,7 +53,7 @@ public class AdjouProductActivity extends AppCompatActivity {
             name =(EditText) findViewById(R.id.productname);
             quantity = (EditText) findViewById(R.id.quantity);
             prix = (EditText) findViewById(R.id.prix);
-            idlist = (EditText) findViewById(R.id.idListProduct);
+            //idlist = (EditText) findViewById(R.id.idListProduct);
             image =(ImageView) findViewById(R.id.imageView);
             ajouter =(Button) findViewById(R.id.ajoutproduct);
             db = new DataBaseHelpers(this);
@@ -76,21 +76,37 @@ public class AdjouProductActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Produits produits =new Produits();
-                    produits.setIdList(idlistrecup);
-                    produits.setImageProduit(imageUri.toString());
-                    produits.setPrixProduit(Integer.parseInt(prix.getText().toString()));
-                    produits.setQuantiteProduit(Integer.parseInt(quantity.getText().toString()));
-                    produits.setAccomplitAchatProduit(true);
-                    produits.setNomProduit(name.getText().toString());
+                    if (prix.getText().toString().equals("")||quantity.getText().toString().equals("")){
+                        Toast.makeText(com.example.coursesapp.AdjouProductActivity.this,"Veuillez remplire tout les champs" ,Toast.LENGTH_LONG).show();
 
-                    db.onpenDataBase();
-                    db.addproduct(produits);
-                    Intent intent = new Intent(AdjouProductActivity.this,Activity_list_product.class);
-                    intent.putExtra("id",produits.getIdList());
-                    startActivity(intent);
 
-                    Toast.makeText(com.example.coursesapp.AdjouProductActivity.this," l id  " +imageUri,Toast.LENGTH_LONG).show();
-                }
+                    }else {
+                        try {
+                            produits.setIdList(idlistrecup);
+                            produits.setPrixProduit(Integer.parseInt(prix.getText().toString()));
+                            produits.setQuantiteProduit(Integer.parseInt(quantity.getText().toString()));
+                            produits.setAccomplitAchatProduit(true);
+                            produits.setNomProduit(name.getText().toString());
+
+
+                            produits.setImageProduit(imageUri.toString());
+                            db.onpenDataBase();
+                            db.addproduct(produits);
+                            Intent intent = new Intent(AdjouProductActivity.this, Activity_list_product.class);
+                            intent.putExtra("id", produits.getIdList());
+                            startActivity(intent);
+
+                            Toast.makeText(com.example.coursesapp.AdjouProductActivity.this, " l id  " + imageUri, Toast.LENGTH_LONG).show();
+
+
+                        } catch (NullPointerException e) {
+                            Toast.makeText(com.example.coursesapp.AdjouProductActivity.this, "ajouter un image", Toast.LENGTH_LONG).show();
+
+
+                        }
+                    }
+
+                    }
             });
 
         }

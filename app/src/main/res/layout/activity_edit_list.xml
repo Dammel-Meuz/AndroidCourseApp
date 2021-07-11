@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/meuz6">
+
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/check"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/fragment_horizontal_margin"
+        />
+
+    <EditText
+        android:id="@+id/listname"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:hint="list Name"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+
+        />
+    <EditText
+        android:id="@+id/montantPrevue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:hint="montant"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        />
+    <Button
+        android:id="@+id/ajoutList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/fragment_horizontal_margin"
+        android:text="Editer"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:backgroundTint="@color/meuz5"
+        />
+</LinearLayout>

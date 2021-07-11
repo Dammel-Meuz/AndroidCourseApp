@@ -39,49 +39,49 @@
         android:inputType="number"
         android:selectAllOnFocus="true"
         />
-    <EditText
-        android:id="@+id/datecreation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Date Creation"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+    <!-- <EditText
+         android:id="@+id/datecreation"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginEnd="24dp"
+         android:hint="Date Creation"
+         android:clickable="false"
+         android:cursorVisible="false"
+         android:focusable="false"
+         android:focusableInTouchMode="false"
 
-        />
-    <EditText
-        android:id="@+id/datemodification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Date de modification"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
+         />
+     <EditText
+         android:id="@+id/datemodification"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="24dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginEnd="24dp"
+         android:hint="Date de modification"
+         android:clickable="false"
+         android:cursorVisible="false"
+         android:focusable="false"
+         android:focusableInTouchMode="false"
 
-        />
-
-
+         />-->
 
 
 
 
-    <Button
-        android:id="@+id/ajoutList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/fragment_horizontal_margin"
-        android:text="Ajouter"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:backgroundTint="@color/meuz5"
-        />
-</LinearLayout>
+
+
+     <Button
+         android:id="@+id/ajoutList"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:layout_margin="@dimen/fragment_horizontal_margin"
+         android:text="Ajouter"
+         android:textStyle="bold"
+         android:textSize="30dp"
+         android:backgroundTint="@color/meuz5"
+         />
+ </LinearLayout>
